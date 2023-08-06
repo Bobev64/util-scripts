@@ -3,9 +3,6 @@
 # Intended usage: this shell script is meant to take the first argument (being a path to a directory of music files)
 # and copy a compressed version of them to the path from which the script is ran
 
-# TODO: Figure out why the below code works in executing the following block of code for both aiff and flac files
-# Answers found here: https://unix.stackexchange.com/questions/15308/how-to-use-find-command-to-search-for-multiple-extensions
-
 find "$1" -type f \( -name "*.aiff" -o -name "*.flac" \) -exec sh -c '
     basename=$(basename "$1")
     removed_ext="${basename%.*}"
@@ -15,6 +12,3 @@ find "$1" -type f \( -name "*.aiff" -o -name "*.flac" \) -exec sh -c '
     ffmpeg -i "$1" -threads 12 -vn -ac 2 -b:a 320k "$removed_ext".mp3
 
 ' find-sh {} \;
-
-# TODO: Figure out how to get full dir of directory to copy files to from above
-# ffmpeg -i "$1" -vn -ac 2 -b:a 320k "$removed_ext".mp3
